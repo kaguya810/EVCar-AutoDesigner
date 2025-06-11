@@ -4,18 +4,18 @@ clc; clear; close all;
 %% ==================== 集中化参数配置 ====================
 params = struct();
 % 基础固定参数
-params.u_a = 40;            % 巡航车速 (km/h)
+params.u_a = 60;            % 巡航车速 (km/h)
 params.eta_t = 0.92;        % 传动效率
 params.eta_e = 0.92;        % 电机效率
 params.g = 9.8;             % 重力加速度 (m/s^2)
-params.W0 = 21.6;           % 电池总能量 (kWh)
+params.W0 = 138.74;           % 电池总能量 (kWh)
 
 % 基准参数
-params.m_base = 1400;       % 满载质量 (kg)
-params.m_norm = 1900;       % 整备质量 (Kg)
-params.f_base = 0.012;      % 滚动阻力系数
-params.Cd_base = 0.31;      % 空气阻力系数
-params.A_base = 2;          % 迎风面积 (m²)
+params.m_base = 4200;       % 满载质量 (kg)
+params.m_norm = 3030;       % 整备质量 (Kg)
+params.f_base = 0.015;      % 滚动阻力系数
+params.Cd_base = 0.38;      % 空气阻力系数
+params.A_base = 3.769;          % 迎风面积 (m²)
 
 % 分析范围参数
 params.m_range = linspace(params.m_norm, params.m_base, 100);   % 质量范围 (kg)
@@ -56,7 +56,9 @@ end
 %% ==================== 计算所有影响因素 ====================
 % 质量影响
 S_m = arrayfun(@(m) calculate_range(params, 'm', m), params.m_range);
-eta_e_range = 0.91 + 0.078 * (1 - exp(-0.002*(params.m_range - 1400))) - 0.05 * exp(0.001*(params.m_range - 1900));
+eta_norm = 0.85; % 整备质量时的效率
+slope_eta = (params.eta_e - eta_norm) / (params.m_base - params.m_norm);
+eta_e_range = slope_eta * (params.m_range - params.m_norm) + eta_norm;
 
 % 滚动阻力影响
 S_f = arrayfun(@(f) calculate_range(params, 'f', f), params.f_range);
