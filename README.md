@@ -95,8 +95,8 @@ transmiss
 
 ## 结果展示
 
-### 驱动力-阻力平衡图
-![驱动力-阻力平衡图](plot/Performance.png)
+### 综合性能分析图
+![综合性能分析图](plot/Performance.png)
 
 ### 续航影响因素分析
 ![续航影响因素](plot/range.png)
