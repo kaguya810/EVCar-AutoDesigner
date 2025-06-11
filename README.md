@@ -1,28 +1,22 @@
 
-# 新能源汽车动力系统设计工具
+# 新能源汽车自动设计工具套件
+# EVCar-AutoDesigner-Kit
 
 ![MATLAB](https://img.shields.io/badge/MATLAB-R2022b-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
 ## 项目描述
 
-本项目是一个基于MATLAB的新能源汽车动力系统设计工具，专为车辆工程领域的新能源汽车设计开发。该工具根据给定的车辆参数和性能指标，完成完整的动力系统参数匹配设计，包括：
+**新能源汽车动力系统设计工具**是一个基于MATLAB的开源工具包，专为车辆工程师和研究人员设计。该项目提供了一套完整的解决方案，用于新能源汽车（特别是纯电动商务车）的动力系统参数匹配、性能分析和优化设计。
 
-1. **电机参数匹配**：根据最高车速、爬坡性能和加速性能要求设计电机参数
-2. **电池系统设计**：根据续驶里程和电压要求设计电池组参数
-3. **传动系统设计**：优化传动比，完成齿轮参数设计和轴径计算
-4. **性能分析**：进行最高车速、爬坡能力和加速性能分析
-5. **续航分析**：评估不同参数对续航里程的影响
+本工具严格遵循车辆工程原理，根据给定的车辆参数和性能指标，自动完成：
+- 电机参数校核（功率、转矩、转速）
+- 电池系统设计（电压、容量、能量）
+- 传动系统设计（传动比、齿轮参数、工艺合理性）
+- 综合性能分析（最高车速、爬坡能力、加速性能）
+- 续航影响因素研究（质量、阻力系数等）
 
-该工具特别适用于纯电动商务车设计，但也可扩展用于其他类型的新能源汽车设计。
-
-## 关键特性
-
-- **完整的动力系统参数匹配**：从整车参数到电机、电池、传动系统的完整设计流程
-- **多维度性能分析**：驱动力-阻力平衡、车速-爬坡度、车速-加速度等性能曲线
-- **续航影响因素分析**：评估质量、阻力系数、迎风面积等参数对续航的影响
-- **MATLAB实现**：提供可直接运行的MATLAB代码和可视化工具
-- **工业级设计标准**：遵循新能源汽车设计标准和规范
+所有代码均在GNU General Public License v3.0下开源，确保学术和工业应用的自由使用与共享。
 
 ## 安装与使用
 
@@ -33,8 +27,8 @@
 ### 使用步骤
 1. 克隆仓库到本地：
 ```bash
-git clone https://github.com/yourusername/ev-powertrain-design.git
-cd ev-powertrain-design
+git clone https://github.com/Kaguya810/EVCar-AutoDesigner.git
+cd EVCar-AutoDesigner
 ```
 
 2. 在MATLAB中打开项目：
@@ -54,26 +48,22 @@ run main.m
 
 ### 文件结构
 ```
-├── main.m                 # 主设计脚本
-├── motor_design.m         # 电机参数设计
-├── battery_design.m       # 电池系统设计
-├── transmission_design.m  # 传动系统设计
-├── performance_analysis.m # 性能分析
-├── range_analysis.m       # 续航分析
-├── utils/                 # 辅助函数
-│   ├── calc_power.m       # 功率计算函数
-│   └── calc_range.m       # 续航计算函数
-├── data/                  # 参数配置文件
-│   └── vehicle_params.m   # 车辆参数
-└── results/               # 结果输出目录
+├── log.txt                # 输出示例
+├── EVCar.prj              # 工程文件
+├── motordesign.m          # 电机设计脚本
+├── battery.m              # 电池参数设计
+├── transmiss.m            # 传动系统设计
+├── performance.m          # 性能分析
+├── range.m                # 续航分析
+└── plot/               # 图表存放目录
 ```
 
 ## 设计流程
 
 ### 1. 电机参数匹配
-- 根据最高车速、最大爬坡度和加速性能计算需求功率
-- 从预定义电机库中选择合适型号
-- 输出电机额定功率、峰值功率、转速范围等参数
+- 程序会根据最高车速、最大爬坡度和加速性能计算需求功率并校验
+- 自行到网路中检索合适电机型号
+- 设置电机额定功率、峰值功率、转速范围等参数
 
 ### 2. 电池系统设计
 - 根据电压要求确定串联单体数
@@ -98,18 +88,17 @@ run main.m
 - 滚动阻力系数对续航里程的影响
 - 空气阻力系数对续航里程的影响
 - 迎风面积对续航里程的影响
-- 参数灵敏度分析
 
 ## 结果展示
 
 ### 驱动力-阻力平衡图
-![驱动力-阻力平衡图](docs/drive_resistance_balance.png)
+![驱动力-阻力平衡图](plot/drive_resistance_balance.png)
 
 ### 车速-爬坡度曲线
-![车速-爬坡度曲线](docs/speed_grade.png)
+![车速-爬坡度曲线](plot/speed_grade.png)
 
 ### 续航影响因素分析
-![续航影响因素](docs/range_factors.png)
+![续航影响因素](plot/range_factors.png)
 
 ## 设计案例
 
@@ -121,7 +110,7 @@ run main.m
   - 最大爬坡度：20%@30km/h
   - 续驶里程：≥200km（60km/h匀速）
 
-运行`main.m`可查看完整设计结果。
+逐次运行可查看完整设计结果。
 
 ## 贡献指南
 
@@ -134,15 +123,14 @@ run main.m
 
 ## 许可证
 
-本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
+本项目采用 GPL 3.0 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
 
 ## 联系方式
 
 如有任何问题或建议，请联系：
 - 项目负责人：Your Name
 - 邮箱：your.email@example.com
-- 问题追踪：[GitHub Issues](https://github.com/yourusername/ev-powertrain-design/issues)
+- 问题追踪：[GitHub Issues](https://github.com/Kaguya810/EVCar-AutoDesigner/issues)
 
 ---
-
-**为新能源汽车设计赋能** - 本工具为车辆工程师提供专业、高效的新能源汽车动力系统设计解决方案。
+##本工具为车辆工程的同学们提供新能源汽车课程设计参考方案，如不审查数据结果强行套用，产生后果概不负责。
