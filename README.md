@@ -96,13 +96,10 @@ transmiss
 ## 结果展示
 
 ### 驱动力-阻力平衡图
-![驱动力-阻力平衡图](plot/drive_resistance_balance.png)
-
-### 车速-爬坡度曲线
-![车速-爬坡度曲线](plot/speed_grade.png)
+![驱动力-阻力平衡图](plot/Performance.png)
 
 ### 续航影响因素分析
-![续航影响因素](plot/range_factors.png)
+![续航影响因素](plot/range.png)
 
 ## 设计案例
 
