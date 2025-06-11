@@ -4,26 +4,26 @@ clc; clear; close all;
 %% ==================== 参数集中化配置 ====================
 params = struct();
 % 车辆参数
-params.vehicle.m = 1360;           % 满载质量 (kg)
+params.vehicle.m = 4200;           % 满载质量 (kg)
 params.vehicle.g = 9.8;            % 重力加速度 (m/s^2)
-params.vehicle.f = 0.012;          % 滚动阻力系数
-params.vehicle.Cd = 0.31;          % 风阻系数
-params.vehicle.A = 2;              % 迎风面积 (m^2)
+params.vehicle.f = 0.015;          % 滚动阻力系数
+params.vehicle.Cd = 0.38;          % 风阻系数
+params.vehicle.A = 3.769;              % 迎风面积 (m^2)
 params.vehicle.eta_t = 0.92;       % 传动效率
-params.vehicle.r = 0.282;          % 车轮半径 (m)
-params.vehicle.delta = 1.1;        % 质量转换系数
+params.vehicle.r = 0.364;          % 车轮半径 (m)
+params.vehicle.delta = 1.01;        % 质量转换系数
 
 % 电机参数
-params.motor.T_max = 180;          % 峰值转矩 (N·m)
-params.motor.P_max = 70;           % 峰值功率 (kW)
-params.motor.n_e = 4800;           % 额定转速 (rpm)
-params.motor.n_max = 15000;        % 最高转速 (rpm)
+params.motor.T_max = 600;          % 峰值转矩 (N·m)
+params.motor.P_max = 100;           % 峰值功率 (kW)
+params.motor.n_e = 2500;           % 额定转速 (rpm)
+params.motor.n_max = 8000;        % 最高转速 (rpm)
 
 % 传动系统参数
-params.drivetrain.i_t = 12.18;     % 总传动比
+params.drivetrain.i_t = 7.11;     % 总传动比
 
 % 目标车速参数
-params.target.v_test = 100;        % 加速性能测试目标车速 (km/h)
+params.target.v_test = 50;        % 加速性能测试目标车速 (km/h)
 params.target.v_grade = 30;        % 爬坡度测试目标车速 (km/h)
 
 %% ==================== 行驶阻力计算 ====================
@@ -101,11 +101,11 @@ plot(v_kmh, grade, 'm-', 'LineWidth', 2);
 hold on;
 % 标注设计爬坡度和实际爬坡度
 plot([params.target.v_grade, params.target.v_grade], [0, 50], 'k--', 'LineWidth', 1.5);
-plot([0, max(v_kmh)], [30, 30], 'r--', 'LineWidth', 1.5);
+plot([0, max(v_kmh)], [20, 20], 'r--', 'LineWidth', 1.5);
 
 % 获取指定车速的爬坡度
 idx_grade = find(v_kmh >= params.target.v_grade, 1);
-text_str = sprintf('设计爬坡度: %d%%@%dkm/h', 30, params.target.v_grade);
+text_str = sprintf('设计爬坡度: %d%%@%dkm/h', 20, params.target.v_grade);
 actual_grade = grade(idx_grade);
 result_str = sprintf('%dkm/h爬坡度: %.1f%%', params.target.v_grade, actual_grade);
 
@@ -194,12 +194,12 @@ subplot(2, 2, 2);
 plot(v_kmh, grade, 'Color', gray_grade, 'LineWidth', 2, 'Marker', 'o', 'MarkerSize', 3);
 hold on;
 plot([params.target.v_grade, params.target.v_grade], [0, 50], 'k:', 'LineWidth', 1.5);
-plot([0, max(v_kmh)], [30, 30], 'k-.', 'LineWidth', 1.5);  % 改为黑色点划线
+plot([0, max(v_kmh)], [20, 20], 'k-.', 'LineWidth', 1.5);  % 改为黑色点划线
 
 % 获取并显示关键爬坡度值
 idx_grade = find(v_kmh >= params.target.v_grade, 1);
 actual_grade = grade(idx_grade);
-text_str1 = sprintf('设计要求: %d%%@%dkm/h', 30, params.target.v_grade);
+text_str1 = sprintf('设计要求: %d%%@%dkm/h', 20, params.target.v_grade);
 text_str2 = sprintf('实际值: %.1f%%', actual_grade);
 
 text(params.target.v_grade+2, 20, text_str1, 'FontSize', 10, 'Color', 'k');
