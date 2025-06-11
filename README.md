@@ -1,6 +1,5 @@
 
 # 新能源汽车自动设计套件
-——EVCar-AutoDesigner-Kit
 
 ![MATLAB](https://img.shields.io/badge/MATLAB-R2022b-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
