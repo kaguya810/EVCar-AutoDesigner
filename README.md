@@ -132,9 +132,9 @@ transmiss
 ## 联系方式
 
 如有任何问题或建议，请联系：
-- 项目负责人：Your Name
-- 邮箱：your.email@example.com
-- 问题追踪：[GitHub Issues](https://github.com/Kaguya810/EVCar-AutoDesigner/issues)
+- 项目负责人：KAGUYA810
+- 邮箱：Kaguya810@petalmail.com
+- 问题追踪：[GitHub Issues](https://github.com/Kaguya810/EVCar-AutoDesigner/issues) (优先考虑)
 
 ---
 ##本工具为车辆工程的同学们提供新能源汽车课程设计参考方案，如不审查数据结果强行套用，产生后果概不负责。
