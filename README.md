@@ -49,6 +49,35 @@ transmiss
 - 续航分析图表以交互窗口（Figure）呈现。
 - 有需要可自行另存为到目录中，项目不另外产生图像。
 
+###Simulink模型运行方法
+1. 在Matlab Simulink 模块中打开模块。
+
+2. 运行模块，并调节仿真器步长优化图表。
+
+3.  输入以下代码
+```matlab
+figure;
+time = out.simout.data; % 时间向量（假设两个信号时间相同）
+y1 = out.simout1.data;   % 第一个信号数据
+y2 = out.simout10.data;   % 第二个信号数据
+
+% 左 Y 轴
+yyaxis left;
+plot(time, y1, 'b-', 'LineWidth', 1.5);
+ylabel('续航里程(km)');
+
+% 右 Y 轴
+yyaxis right;
+plot(time, y2, 'r--', 'LineWidth', 1.5);
+ylabel('电机效率eta');
+
+% 添加标签和标题
+xlabel('整车质量m(Kg)');
+grid on;
+legend('续航里程S(Km)', '电机效率eta', 'Location', 'best');
+```
+4.检查全部结构并保存。
+
 ### 文件结构
 ```
 ├── log.txt                # 输出示例
