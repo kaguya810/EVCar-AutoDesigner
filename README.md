@@ -3,6 +3,9 @@
 
 ![MATLAB](https://img.shields.io/badge/MATLAB-R2022b-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+[![Email](https://img.shields.io/badge/邮箱-kaguya810@petalmail.com-blue?style=flat-square&logo=gmail)](mailto:kaguya810@petalmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Kaguya810-black?style=flat-square&logo=github)](https://github.com/kaguya810)
+[![B站](https://img.shields.io/badge/Bilibili-月見山・輝夜-blue?style=flat-square&logo=bilibili)](https://space.bilibili.com/35197337)
 
 ## 项目描述
 
