@@ -15,7 +15,7 @@ params.vehicle.delta = 1.01;        % 质量转换系数
 
 % 电机参数
 params.motor.T_max = 600;          % 峰值转矩 (N·m)
-params.motor.P_max = 100;           % 峰值功率 (kW)
+params.motor.P_max = 156;           % 峰值功率 (kW)
 params.motor.n_e = 2500;           % 额定转速 (rpm)
 params.motor.n_max = 8000;        % 最高转速 (rpm)
 
@@ -78,83 +78,6 @@ t_acc = cumsum(dt);
 t_0_target = t_acc(end);
 
 %% ==================== 绘图与结果输出 ====================
-% 1. 驱动力-阻力平衡图
-figure('Position', [100, 100, 800, 600]);
-plot(v_kmh, F_drive, 'b-', 'LineWidth', 2);
-hold on;
-plot(v_kmh, F_roll, 'g--', 'LineWidth', 1.5);
-plot(v_kmh, F_air, 'c--', 'LineWidth', 1.5);
-plot(v_kmh, F_res, 'r-', 'LineWidth', 2);
-plot([v_max, v_max], [0, max(F_drive)], 'k--', 'LineWidth', 1.5);
-text(v_max+2, max(F_drive)*0.2, sprintf('最高车速: %.1f km/h', v_max), 'FontSize', 12);
-
-xlabel('车速 (km/h)', 'FontSize', 12);
-ylabel('力 (N)', 'FontSize', 12);
-title('驱动力-阻力平衡图', 'FontSize', 14);
-legend('电机驱动力', '滚动阻力', '空气阻力', '总行驶阻力', '最高车速');
-grid on;
-set(gca, 'FontSize', 12);
-
-% 2. 车速-爬坡度曲线
-figure('Position', [100, 100, 800, 600]);
-plot(v_kmh, grade, 'm-', 'LineWidth', 2);
-hold on;
-% 标注设计爬坡度和实际爬坡度
-plot([params.target.v_grade, params.target.v_grade], [0, 50], 'k--', 'LineWidth', 1.5);
-plot([0, max(v_kmh)], [20, 20], 'r--', 'LineWidth', 1.5);
-
-% 获取指定车速的爬坡度
-idx_grade = find(v_kmh >= params.target.v_grade, 1);
-text_str = sprintf('设计爬坡度: %d%%@%dkm/h', 20, params.target.v_grade);
-actual_grade = grade(idx_grade);
-result_str = sprintf('%dkm/h爬坡度: %.1f%%', params.target.v_grade, actual_grade);
-
-text(params.target.v_grade+2, 21, text_str, 'FontSize', 12);
-text(100, 32, result_str, 'FontSize', 12);
-
-xlabel('车速 (km/h)', 'FontSize', 12);
-ylabel('爬坡度 (%)', 'FontSize', 12);
-title('车速-爬坡度性能曲线', 'FontSize', 14);
-grid on;
-set(gca, 'FontSize', 12);
-ylim([0, min(max(grade)*1.2, 50)]);
-
-% 3. 车速-加速度曲线
-figure('Position', [100, 100, 800, 600]);
-yyaxis left;
-plot(v_kmh, a, 'b-', 'LineWidth', 2);
-ylabel('加速度 (m/s²)', 'FontSize', 12);
-ylim([0, max(a)*1.1]);
-
-yyaxis right;
-plot(v_kmh(1:idx_target), t_acc, 'r-', 'LineWidth', 2);
-ylabel('加速时间 (s)', 'FontSize', 12);
-text(10, t_0_target*0.8, sprintf('0-%dkm/h: %.1f s', params.target.v_test, t_0_target), 'FontSize', 12);
-
-xlabel('车速 (km/h)', 'FontSize', 12);
-title('车速-加速度性能曲线', 'FontSize', 14);
-grid on;
-set(gca, 'FontSize', 12, 'YColor', 'k');
-legend('加速度', '加速时间');
-
-% 4. 电机转矩-转速特性
-figure('Position', [100, 100, 800, 600]);
-plot(n, T_motor, 'b-', 'LineWidth', 2);
-hold on;
-% 标注额定转速和最高转速
-plot([params.motor.n_e, params.motor.n_e], [0, params.motor.T_max], 'r--', 'LineWidth', 1.5);
-text(params.motor.n_e+100, params.motor.T_max*0.8, sprintf('额定转速: %d rpm', params.motor.n_e), 'FontSize', 12);
-plot([params.motor.n_max, params.motor.n_max], [0, params.motor.T_max*0.5], 'g--', 'LineWidth', 1.5);
-text(params.motor.n_max+100, params.motor.T_max*0.4, sprintf('最高转速: %d rpm', params.motor.n_max), 'FontSize', 12);
-
-xlabel('电机转速 (rpm)', 'FontSize', 12);
-ylabel('电机转矩 (N·m)', 'FontSize', 12);
-title('电机转矩-转速特性', 'FontSize', 14);
-grid on;
-set(gca, 'FontSize', 12);
-ylim([0, params.motor.T_max*1.1]);
-
-% ==================== 创建多图布局 ====================
 figure('Position', [50, 50, 1200, 900], 'Name', '新能源汽车综合性能分析', 'NumberTitle', 'off');
 set(gcf, 'Color', 'w');
 
@@ -170,18 +93,18 @@ gray_motor = [0.2 0.2 0.2];  % 黑灰 - 电机特性
 
 % 1. 驱动力-阻力平衡图 (左上)
 subplot(2, 2, 1);
-plot(v_kmh, F_drive, 'Color', gray_drive, 'LineWidth', 2, 'LineStyle', '-');
+plot(v_kmh, F_drive, 'Color', gray_drive, 'LineWidth', 1.5, 'LineStyle', '-');
 hold on;
 plot(v_kmh, F_roll, 'Color', gray_roll, 'LineWidth', 1.5, 'LineStyle', ':');
 plot(v_kmh, F_air, 'Color', gray_air, 'LineWidth', 1.5, 'LineStyle', '-.');
-plot(v_kmh, F_res, 'Color', gray_res, 'LineWidth', 2, 'LineStyle', '--');
+plot(v_kmh, F_res, 'Color', gray_res, 'LineWidth', 1.5, 'LineStyle', '--');
 plot([v_max, v_max], [0, max(F_drive)], 'k:', 'LineWidth', 1.5);  % 保持虚线
-text(v_max+2, max(F_drive)*0.2, sprintf('最高车速: %.1f km/h', v_max),...
+text(v_max-46, max(F_drive)*0.3, sprintf('最高车速: %.1f km/h', v_max),...
     'FontSize', 10, 'Color', 'k');  % 黑色文字
 
 xlabel('车速 (km/h)', 'FontSize', 10);
 ylabel('力 (N)', 'FontSize', 10);
-title('驱动力-阻力平衡图', 'FontSize', 12);
+title('(a) 驱动力-阻力平衡图', 'FontSize', 12);
 legend('电机驱动力', '滚动阻力', '空气阻力', '总行驶阻力', '最高车速',...
        'TextColor','k');  % 黑色图例文本
 grid on;
@@ -191,7 +114,7 @@ ylim([0, max(F_drive)*1.1]);
 
 % 2. 车速-爬坡度曲线 (右上)
 subplot(2, 2, 2);
-plot(v_kmh, grade, 'Color', gray_grade, 'LineWidth', 2, 'Marker', 'o', 'MarkerSize', 3);
+plot(v_kmh, grade, 'Color', gray_grade, 'LineWidth', 1.5, 'Marker', 'o', 'MarkerSize', 3);
 hold on;
 plot([params.target.v_grade, params.target.v_grade], [0, 50], 'k:', 'LineWidth', 1.5);
 plot([0, max(v_kmh)], [20, 20], 'k-.', 'LineWidth', 1.5);  % 改为黑色点划线
@@ -202,12 +125,12 @@ actual_grade = grade(idx_grade);
 text_str1 = sprintf('设计要求: %d%%@%dkm/h', 20, params.target.v_grade);
 text_str2 = sprintf('实际值: %.1f%%', actual_grade);
 
-text(params.target.v_grade+2, 20, text_str1, 'FontSize', 10, 'Color', 'k');
-text(params.target.v_grade+2, 17, text_str2, 'FontSize', 10, 'Color', 'k'); % 黑色文字
+text(64, 22, text_str1, 'FontSize', 10, 'Color', 'k');
+text(32, 28, text_str2, 'FontSize', 10, 'Color', 'k'); % 黑色文字
 
 xlabel('车速 (km/h)', 'FontSize', 10);
 ylabel('爬坡度 (%)', 'FontSize', 10);
-title('车速-爬坡度性能曲线', 'FontSize', 12);
+title('(b) 车速-爬坡度性能曲线', 'FontSize', 12);
 grid on;
 set(gca, 'FontSize', 10, 'XColor','k','YColor','k');
 xlim([0, max(v_kmh)]);
@@ -216,13 +139,13 @@ ylim([0, min(max(grade)*1.2, 50)]);
 % 3. 车速-加速度曲线 (左下)
 subplot(2, 2, 3);
 yyaxis left;
-line_acc = plot(v_kmh, a, 'Color', gray_acc, 'LineWidth', 2, 'LineStyle', '-');
+line_acc = plot(v_kmh, a, 'Color', gray_acc, 'LineWidth', 1.5, 'LineStyle', '-');
 ylabel('加速度 (m/s²)', 'FontSize', 10);
 ylim([0, max(a)*1.1]);
 set(gca, 'YColor', 'k');  % 左侧Y轴黑色
 
 yyaxis right;
-line_time = plot(v_kmh(1:idx_target), t_acc, 'Color', gray_time, 'LineWidth', 2, 'LineStyle', '--');
+line_time = plot(v_kmh(1:idx_target), t_acc, 'Color', gray_time, 'LineWidth', 1.5, 'LineStyle', '--');
 ylabel('加速时间 (s)', 'FontSize', 10);
 set(gca, 'YColor', 'k');  % 右侧Y轴黑色
 
@@ -230,27 +153,27 @@ text(10, t_0_target*0.8, sprintf('0-%dkm/h: %.1f s', params.target.v_test, t_0_t
     'FontSize', 10, 'BackgroundColor', 'w', 'Color', 'k');  % 白底黑字
 
 xlabel('车速 (km/h)', 'FontSize', 10);
-title('车速-加速度性能曲线', 'FontSize', 12);
+title('(c) 车速-加速度性能曲线', 'FontSize', 12);
 grid on;
 set(gca, 'FontSize', 10);
 legend([line_acc, line_time], {'加速度', '加速时间'}, 'Location', 'northeast', 'TextColor','k');
-xlim([0, params.target.v_test*1.2]);
+xlim([0, 100]);
 
 % 4. 电机转矩-转速特性 (右下)
 subplot(2, 2, 4);
-plot(n, T_motor, 'Color', gray_motor, 'LineWidth', 2, 'Marker', '+');
+plot(n, T_motor, 'Color', gray_motor, 'LineWidth', 1.5, 'Marker', '+');
 hold on;
 % 标注额定转速和最高转速
 plot([params.motor.n_e, params.motor.n_e], [0, params.motor.T_max], 'k:', 'LineWidth', 1.5);
-text(params.motor.n_e+100, params.motor.T_max*0.8, sprintf('额定转速: %d rpm', params.motor.n_e),...
-    'FontSize', 12, 'Color', 'k');
-plot([params.motor.n_max, params.motor.n_max], [0, params.motor.T_max*0.5], 'k-.', 'LineWidth', 1.5);
-text(params.motor.n_max+100, params.motor.T_max*0.4, sprintf('最高转速: %d rpm', params.motor.n_max),...
-    'FontSize', 12, 'Color', 'k');
+text(400, params.motor.T_max*0.8, sprintf('额定转速: %d rpm', params.motor.n_e),...
+    'FontSize', 10, 'Color', 'k');
+plot([params.motor.n_max, params.motor.n_max], [0, min(T_motor)], 'k-.', 'LineWidth', 1.5);
+text(5900, params.motor.T_max*0.28, sprintf('最高转速: %d rpm', params.motor.n_max),...
+    'FontSize', 10, 'Color', 'k');
 
 xlabel('电机转速 (rpm)', 'FontSize', 12);
 ylabel('电机转矩 (N·m)', 'FontSize', 12);
-title('电机转矩-转速特性', 'FontSize', 14);
+title('(d) 电机转矩-转速特性', 'FontSize', 14);
 grid on;
 set(gca, 'FontSize', 12, 'XColor','k','YColor','k');
 ylim([0, params.motor.T_max*1.1]);

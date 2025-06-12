@@ -1,6 +1,6 @@
 %% 传动系统设计
 
-%% ========== 集中化参数配置 ==========
+%% 集中化参数
 params = struct();
 % 基础参数
 params.m = 4200;           % 满载质量 (kg)
@@ -144,7 +144,7 @@ A2 = (mn2_actual * (z3 + z4)) / (2 * cos(beta_actual2));
 d_in = params.K_in * (params.T_max)^(1/3);  % mm
 
 % 中间轴 (新增)
-d_mid = 0.45 * A1;  % mm
+d_mid = 0.54 * A1;  % mm
 
 % 驱动桥载荷 (新增)
 G2 = params.m * params.g / 2;  % N (取满载重量的50%)
