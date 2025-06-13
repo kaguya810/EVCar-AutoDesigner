@@ -132,6 +132,9 @@ legend('续航里程S(Km)', '电机效率eta', 'Location', 'best');
 ### 续航影响因素分析
 ![续航影响因素](plot/range.png)
 
+### 风阻-续航影响分析
+![续航影响因素](plot/rangemodel.png)
+
 ## 设计案例
 
 本项目包含一个完整的纯电动商务车设计案例：
